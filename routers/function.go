@@ -8,8 +8,8 @@ import (
 
 func GetParameter(ctx *macaron.Context) {
 	para := ctx.Query("para")
-	stdout := processor.RunProcessor(para)
-	ctx.Resp.Write([]byte("response: " +stdout))
+	stdout,stderr := processor.RunProcessor(para)
+	ctx.Resp.Write([]byte("right output: " +stdout+"\nwrong output: "+stderr))
 }
 
 func GetIndex(ctx *macaron.Context) {
