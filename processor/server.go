@@ -9,8 +9,8 @@ import (
 )
 
 func RunProcessor(args string) (stdout string){
-	stdout,stderr,killed,err:=runCommandWithTimeout(30, "python",
-		"/Users/conanhu/Desktop/goprojects/src/tcf/processor/pytest.py",args)
+	stdout,stderr,killed,err:=runCommandWithTimeout(30, "sudo docker exec tcf bash -c",
+		"'cd ../../examples/apps/generic_client/; python generic_client.py --uri \"http://localhost:1947\" --workload_id \"heart-disease-eval\" --in_data \"Data: ",args,"\"'",)
 	if err == nil{
 		logger.Log.Printf("killed:%v,stdout:%v",killed,stdout)
 	}else{
