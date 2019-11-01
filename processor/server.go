@@ -9,7 +9,7 @@ import (
 )
 
 func RunProcessor(args string) (stdout string){
-	stdout,stderr,killed,err:=runCommandWithTimeout(30, "docker exec", "tcf bash -c",
+	stdout,stderr,killed,_:=runCommandWithTimeout(30, "docker exec", "tcf bash -c",
 		"'cd ../../examples/apps/generic_client/; python generic_client.py " +
 		"--uri \"http://localhost:1947\" " +
 		"--workload_id \"heart-disease-eval\" " +
@@ -17,11 +17,13 @@ func RunProcessor(args string) (stdout string){
 	//stdout,stderr,killed,err:=runCommandWithTimeout(30, "sudo docker exec tcf bash -c",
 	//	"cd ../../examples/apps/generic_client/; python generic_client.py", "--uri", "http://localhost:1947",
 	//	"heart-disease-eval","--in_data ","Data:",args)
-	if err == nil{
-		logger.Log.Printf("killed:%v,stdout:%v",killed,stdout)
-	}else{
-		logger.Log.Printf("killed:%v,stderr:%v",killed,stderr)
-	}
+	//if err == nil{
+	//	logger.Log.Printf("killed:%v,stdout:%v",killed,stdout)
+	//}else{
+	//	logger.Log.Printf("killed:%v,stderr:%v",killed,stderr)
+	//}
+	logger.Log.Printf("killed:%v,stdout:%v",killed,stdout)
+	logger.Log.Printf("killed:%v,stderr:%v",killed,stderr)
 	return
 }
 
