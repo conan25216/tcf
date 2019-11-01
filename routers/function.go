@@ -3,7 +3,6 @@ package routers
 import (
 	"gopkg.in/macaron.v1"
 	"tcf/processor"
-	"strings"
 )
 
 
