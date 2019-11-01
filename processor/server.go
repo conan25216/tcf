@@ -9,8 +9,8 @@ import (
 )
 
 func RunProcessor(args string) (stdout string){
-	stdout,stderr,killed,err:=runCommandWithTimeout(30, "docker exec" +
-		"tcf bash -c 'cd ../../examples/apps/generic_client/; python generic_client.py " +
+	stdout,stderr,killed,err:=runCommandWithTimeout(30, "docker exec", "tcf bash -c",
+		"'cd ../../examples/apps/generic_client/; python generic_client.py " +
 		"--uri \"http://localhost:1947\" " +
 		"--workload_id \"heart-disease-eval\" " +
 		"--in_data \"Data: 52 200 10 167  1102 225 1 195 161 110 1 111 136 1\"'")
