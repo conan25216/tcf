@@ -21,7 +21,7 @@ type Params struct{
 	Age string `json:"age"`
 	Gender string `json:"gender"`
 	Cpt string `json:"cpt"`
-	Rbp string
+	Rbp string `json:"rbp"`
 	Sc string `json:"sc"`
 	Fbs string `json:"fbs"`
 	Err string `json:"err"`
