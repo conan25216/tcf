@@ -70,7 +70,7 @@
 <div id="app">
     <el-row>
         <el-col  :span="12" :offset="6">
-            <div class="title"><img src="./logo.png" alt="" class="logo">Tencent机密计算引擎<sup>Beta</sup></div>
+            <div class="title"><img src="pic/logo.png" alt="" class="logo">Tencent机密计算引擎<sup>Beta</sup></div>
             <div class="sub_title">心脏患病概率评估</div>
         </el-col>
     </el-row>
@@ -98,7 +98,7 @@
                     <el-col  :span="7" :offset="1">
                         <el-form-item label="身高:">
                             <el-input
-                                    v-model="ruleForm.text3"
+                                    v-model="ruleForm.nouse"
                                     placeholder="请输入身高"
                                     class="form-input">
                             </el-input>
@@ -147,7 +147,7 @@
                     <el-col  :span="8" :offset="1">
                         <el-form-item label="运动相对于静息而引发的ST抑制:">
                             <el-input
-                                    v-model="ruleForm.mhr"
+                                    v-model="ruleForm.st"
                                     placeholder="请输入运动相对于静息而引发的ST抑制"
                                     class="form-input">
                             </el-input>
@@ -155,7 +155,7 @@
                     </el-col>
                     <el-col  :span="7" :offset="1">
                         <el-form-item label="铊压力测试:">
-                            <el-select v-model="ruleForm.cpt" placeholder="胸痛类型" class="form-input">
+                            <el-select v-model="ruleForm.tst" placeholder="胸痛类型" class="form-input">
                                 <el-option label="正常" value="3"></el-option>
                                 <el-option label="固定缺陷" value="6"></el-option>
                                 <el-option label="可逆缺陷" value="7"></el-option>
@@ -203,7 +203,7 @@
                     </el-col>
                     <el-col  :span="8" :offset="1">
                         <el-form-item label="运动ST段峰值斜率:">
-                            <el-select v-model="ruleForm.cpt" placeholder="运动ST段峰值斜率" class="form-input">
+                            <el-select v-model="ruleForm.slope" placeholder="运动ST段峰值斜率" class="form-input">
                                 <el-option label="平缓" value="1"></el-option>
                                 <el-option label="上升" value="0"></el-option>
                                 <el-option label="下降" value="2"></el-option>
@@ -242,7 +242,7 @@
             ruleForm: {
                 age: '',
                 gender: '',
-                text3: '',
+                nouse:'',
                 rbp: '',
                 mhr: '',
                 sc: '',
@@ -255,7 +255,6 @@
                 eia:'',
                 slope:'',
                 mvcf:'',
-                evaluate:'begin to evalute',
                 stdout:'',
                 stderr:'',
             },
