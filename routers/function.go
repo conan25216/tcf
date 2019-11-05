@@ -33,11 +33,6 @@ type Params struct{
 	Mvcf string `json:"mvcf"`
 }
 
-func GetParameter(ctx *macaron.Context) {
-	para := ctx.Query("para")
-	stdout,stderr := processor.RunProcessor(para)
-	ctx.Resp.Write([]byte("right output: " +stdout+"\nwrong output: "+stderr))
-}
 
 func GetIndex(ctx *macaron.Context) {
 	ctx.HTML(200, "index")
