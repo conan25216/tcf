@@ -9,8 +9,10 @@ import (
 )
 
 func RunProcessor(args string) (stdout, stderr string){
-	command_template := "cd ../../examples/apps/generic_client/; python generic_client.py --uri 'http://localhost:1947' --workload_id 'heart-disease-eval' --in_data 'Data: "+args+"' -m 1"
-	stdout,stderr,killed,_:=runCommandWithTimeout(60*10, "docker", "exec","tcf", "/bin/bash","-c",command_template)	//stdout,stderr,killed,_:=runCommandWithTimeout(30, "docker exec", "tcf bash -c",
+	command_template := "cd ../../examples/apps/generic_client/; python generic_client.py --uri 'http://localhost:1947' " +
+		"--workload_id 'heart-disease-eval' --in_data 'Data: "+args+"' -m 1"
+	stdout,stderr,killed,_:=runCommandWithTimeout(60*10, "docker", "exec","tcf", "/bin/bash","-c",
+		command_template)	//stdout,stderr,killed,_:=runCommandWithTimeout(30, "docker exec", "tcf bash -c",
 	logger.Log.Printf("killed:%v,stdout:%v",killed,stdout)
 	logger.Log.Printf("killed:%v,stderr:%v",killed,stderr)
 	if stdout == "" {
