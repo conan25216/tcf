@@ -4,7 +4,6 @@ import (
 	"gopkg.in/macaron.v1"
 	"tcf/processor"
 	"encoding/json"
-	"fmt"
 )
 
 
@@ -44,11 +43,8 @@ func GetTcfParas(ctx *macaron.Context) {
 	params := new(Params)
 	values,_ := ctx.Req.Body().Bytes()
 	json.Unmarshal(values,params)
-	fmt.Println("age is",params.Age)
-	fmt.Println("mvcf is",params.Mvcf)
-	abc := params.ParasMerge()
-	fmt.Println("params string is ", abc)
-	stdout,stderr := processor.RunProcessor(abc)
+	paramString := params.ParasMerge()
+	stdout,stderr := processor.RunProcessor(paramString)
 	result :=  Result{Stdout:stdout,Stderr:stderr}
 	resultJson,_:=json.Marshal(result)
 	ctx.Resp.Write([]byte(resultJson))
