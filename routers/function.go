@@ -4,6 +4,9 @@ import (
 	"gopkg.in/macaron.v1"
 	"tcf/processor"
 	"encoding/json"
+	"reflect"
+	"fmt"
+	"errors"
 )
 
 
@@ -43,26 +46,32 @@ func GetTcfParas(ctx *macaron.Context) {
 	params := new(Params)
 	values,_ := ctx.Req.Body().Bytes()
 	json.Unmarshal(values,params)
-	paramString := params.ParasMerge()
+	paramString, err := params.ParasMerge()
+	if err != nil  {
+		return //if miss value we dont run process, just return empty string
+	}
 	stdout,stderr := processor.RunProcessor(paramString)
 	result :=  Result{Stdout:stdout,Stderr:stderr}
 	resultJson,_:=json.Marshal(result)
 	ctx.Resp.Write([]byte(resultJson))
 }
 
-func (p *Params)ParasMerge()(params string){
-	//v := reflect.ValueOf(p)
-	//count := v.NumField()
-	//
-	//for i := 0; i < count; i++ {
-	//	f := v.Field(i)
-	//	switch f.Kind() {
-	//	case reflect.String:
-	//		fmt.Println(f.String())
-	//		params+=f.String()
-	//	}
-	//}
-	//return
-	return p.Age+" "+p.Gender+" "+p.Rbp+" "+p.Mhr+" "+p.Sc+" "+p.Fbs+" "+p.St+" "+p.Tst+" "+
-		p.Hdd+" "+p.Cpt+" "+p.Err+" "+p.Eia+" "+p.Slope+" "+p.Mvcf
+func (p *Params)ParasMerge()(params string,err error){
+	v := reflect.ValueOf(*p)
+	count := v.NumField()
+	for i := 0; i < count; i++ {
+		f := v.Field(i)
+		switch f.Kind() {
+		//	//fmt.Println("f.kind is", f)
+		case reflect.String:
+			fmt.Println(f.String())
+			if f.String() == "" {
+				return "",errors.New("miss value error!")
+			}
+			params+=f.String()
+		}
+	}
+	return params,nil
+	//return p.Age+" "+p.Gender+" "+p.Rbp+" "+p.Mhr+" "+p.Sc+" "+p.Fbs+" "+p.St+" "+p.Tst+" "+
+	//	p.Hdd+" "+p.Cpt+" "+p.Err+" "+p.Eia+" "+p.Slope+" "+p.Mvcf
 }
