@@ -20,18 +20,18 @@ type Result struct {
 type Params struct{
 	Age string `json:"age"`
 	Gender string `json:"gender"`
-	Rbp string `json:"rbp"`
-	Mhr string `json:"mhr"`
+	Cpt string `json:"cpt"`
+	Rbp string
 	Sc string `json:"sc"`
 	Fbs string `json:"fbs"`
-	St string `json:"st"`
-	Tst string `json:"tst"`
-	Hdd string `json:"hdd"`
-	Cpt string `json:"cpt"`
 	Err string `json:"err"`
+	Mhr string `json:"mhr"`
 	Eia string `json:"eia"`
+	St string `json:"st"`
 	Slope string `json:"slope"`
 	Mvcf string `json:"mvcf"`
+	Tst string `json:"tst"`
+	Hdd string `json:"hdd"`
 }
 
 
