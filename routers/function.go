@@ -64,6 +64,7 @@ func (p *Params)ParasMerge()(params string,err error){
 		//	//fmt.Println("f.kind is", f)
 		case reflect.String: // security check
 			intValue,err := strconv.Atoi(f.String())
+			fmt.Println("checked value is", intValue)
 			if err != nil && intValue <0 && intValue > 1000{
 				return "", err
 			}
