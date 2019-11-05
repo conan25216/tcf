@@ -1,3 +1,10 @@
+package main
+
+import (
+	"runtime"
+	"tcf/web"
+)
+
 /*
 	1) "Hello World for Macaron"
 
@@ -36,19 +43,13 @@
 
 
 */
-package main
 
-import (
-	"runtime"
-	"tcf/web"
-)
 
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 }
 
 func main() {
-
 	// init a Macaron object
 	web.RunWeb()
 }
