@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"strconv"
 )
 
 
@@ -61,7 +62,11 @@ func (p *Params)ParasMerge()(params string,err error){
 		f := v.Field(i)
 		switch f.Kind() {
 		//	//fmt.Println("f.kind is", f)
-		case reflect.String:
+		case reflect.String: // security check
+			intValue,err := strconv.Atoi(f.String())
+			if err != nil && intValue <0 && intValue > 1000{
+				return "", err
+			}
 			if f.String() == "" {
 				return "",errors.New("miss value error!")
 			}
