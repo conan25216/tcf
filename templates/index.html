@@ -71,7 +71,7 @@
     <div id="app">
         <el-row>
             <el-col  :span="12" :offset="6">
-                <div class="title"><img src="./pic/logo.png" alt="" class="logo">Tencent机密计算引擎<sup>Beta</sup></div>
+                <div class="title"><img src="/pic/logo.png" alt="" class="logo">Tencent机密计算引擎<sup>Beta</sup></div>
                 <div class="sub_title">心脏患病概率评估</div>
             </el-col>
         </el-row>
@@ -266,7 +266,7 @@
         methods: {
             clickMe: function () {
                 var obj = this;
-                const url = '/processor/evluate/';
+                const url = '/tcf/evluate/';
                 const params = {
                     ...this.ruleForm,
                 }
