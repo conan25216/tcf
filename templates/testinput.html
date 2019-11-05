@@ -1,133 +1,288 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tencent机密计算引擎测试版</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        .title {
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+            padding-top: 15px;
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+        }
+        .sub_title {
+            font-size: 16px;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: 600;
+        }
+        .form-input {
+            width: 100%;
+        }
+        .el-form-item {
+            display: flex;
+            align-items: center;
+        }
+        .el-form-item__label {
+            line-height: 20px;
+        }
+        .el-form-item__content {
+            /* display: flex;
+            align-items: center;
+            height: 40px; */
+            flex:1;
+            margin-left: 0 !important;
+        }
+        .result {
+            border: 1px solid #D5D5D5;
+            border-radius: 10px;
+            padding: 15px 15px;
+            line-height: 25px;
+            max-height: 100px;
+            overflow: auto;
+            font-size: 16px;
+        }
+        .footer {
+            text-align: center;
+            padding: 15px 15px;
+            font-size: 16px;
+            color: #454545;
+        }
+        .logo {
+            height: 38px;
+            width: 44px;
+            vertical-align: middle;
+            /* display: block; */
+        }
+    </style>
 </head>
-<body>
-<form class="form-horizontal">
-    <div class="form-group">
-        <label for="age" class="col-sm-1 control-label">年龄</label>
-        <div class="col-sm-1">
-            <input type="text" class="form-control" id="age" placeholder="age">
-        </div>
-        <label for="rbp" class="col-sm-1 control-label">静息血压</label>
-        <div class="col-sm-1">
-            <input type="text" class="form-control" id="rbp" placeholder="rbp">
-        </div>
-        <label for="sc" class="col-sm-1 control-label">血清胆固醇</label>
-        <div class="col-sm-1">
-            <input type="text" class="form-control" id="sc" placeholder="sc">
-        </div>
-        <label for="fbs" class="col-sm-1 control-label">空腹血糖</label>
-        <div class="col-sm-1">
-            <input type="text" class="form-control" id="fbs" placeholder="fbs">
-        </div>
-        <label for="mhra" class="col-sm-1 control-label">最高心率</label>
-        <div class="col-sm-1">
-            <input type="text" class="form-control" id="mhra" placeholder="mhra">
-        </div>
+
+<div>
+<div id="app">
+    <el-row>
+        <el-col  :span="12" :offset="6">
+            <div class="title"><img src="./logo.png" alt="" class="logo">Tencent机密计算引擎<sup>Beta</sup></div>
+            <div class="sub_title">心脏患病概率评估</div>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-col :offset="2" :span="20">
+            <el-form :model="ruleForm" ref="ruleForm" label-width="100px">
+                <el-form-item label-width="0">
+                    <el-col  :span="7">
+                        <el-form-item label="年龄:">
+                            <el-input
+                                    v-model="ruleForm.age"
+                                    placeholder="请输入年龄"
+                                    class="form-input">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="8" :offset="1">
+                        <el-form-item label="性别:">
+                            <el-select v-model="ruleForm.gender" placeholder="性别" class="form-input">
+                                <el-option label="男" value="1"></el-option>
+                                <el-option label="女" value="0"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="7" :offset="1">
+                        <el-form-item label="身高:">
+                            <el-input
+                                    v-model="ruleForm.text3"
+                                    placeholder="请输入身高"
+                                    class="form-input">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label-width="0">
+                    <el-col  :span="7">
+                        <el-form-item label="静息血压:">
+                            <el-input
+                                    v-model="ruleForm.rbp"
+                                    placeholder="请输入静息血压"
+                                    class="form-input">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="8" :offset="1">
+                        <el-form-item label="最高心率:">
+                            <el-input
+                                    v-model="ruleForm.mhr"
+                                    placeholder="请输入最高心率"
+                                    class="form-input">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="7" :offset="1">
+                        <el-form-item label="血清胆固醇:">
+                            <el-input
+                                    v-model="ruleForm.sc"
+                                    placeholder="请输入血清胆固醇"
+                                    class="form-input">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label-width="0">
+                    <el-col  :span="7">
+                        <el-form-item label="空腹血糖:">
+                            <el-input
+                                    v-model="ruleForm.fbs"
+                                    placeholder="请输入空腹血糖"
+                                    class="form-input">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="8" :offset="1">
+                        <el-form-item label="运动相对于静息而引发的ST抑制:">
+                            <el-input
+                                    v-model="ruleForm.mhr"
+                                    placeholder="请输入运动相对于静息而引发的ST抑制"
+                                    class="form-input">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="7" :offset="1">
+                        <el-form-item label="铊压力测试:">
+                            <el-select v-model="ruleForm.cpt" placeholder="胸痛类型" class="form-input">
+                                <el-option label="正常" value="3"></el-option>
+                                <el-option label="固定缺陷" value="6"></el-option>
+                                <el-option label="可逆缺陷" value="7"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label-width="0">
+                    <el-col  :span="7">
+                        <el-form-item label="心脏诊断:">
+                            <el-select v-model="ruleForm.hdd" placeholder="心脏诊断" class="form-input">
+                                <el-option label="&lt;50%" value="0"></el-option>
+                                <el-option label="&gt;50%" value="1"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="8" :offset="1">
+                        <el-form-item label="胸痛类型:">
+                            <el-select v-model="ruleForm.cpt" placeholder="胸痛类型" class="form-input">
+                                <el-option label="无症状" value="0"></el-option>
+                                <el-option label="典型心绞痛" value="1"></el-option>
+                                <el-option label="非典型心绞痛" value="2"></el-option>
+                                <el-option label="非绞痛型疼痛" value="3"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="7" :offset="1">
+                        <el-form-item label="静息心电图结果:">
+                            <el-select v-model="ruleForm.err" placeholder="静息心电图结果" class="form-input">
+                                <el-option label="正常" value="0"></el-option>
+                                <el-option label="ST-T波异常" value="1"></el-option>
+                                <el-option label="显示肥大" value="2"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label-width="0">
+                    <el-col  :span="7">
+                        <el-form-item label="运动诱发心绞痛:">
+                            <el-select v-model="ruleForm.eia" placeholder="运动诱发心绞痛" class="form-input">
+                                <el-option label="否" value="0"></el-option>
+                                <el-option label="是" value="1"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="8" :offset="1">
+                        <el-form-item label="运动ST段峰值斜率:">
+                            <el-select v-model="ruleForm.cpt" placeholder="运动ST段峰值斜率" class="form-input">
+                                <el-option label="平缓" value="1"></el-option>
+                                <el-option label="上升" value="0"></el-option>
+                                <el-option label="下降" value="2"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col  :span="7" :offset="1">
+                        <el-form-item label="透视染色的主要血管数量:">
+                            <el-select v-model="ruleForm.mvcf" placeholder="透视染色的主要血管数量" class="form-input">
+                                <el-option label="0" value="0"></el-option>
+                                <el-option label="1" value="1"></el-option>
+                                <el-option label="2" value="2"></el-option>
+                                <el-option label="3" value="3"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label-width="0" style="text-align: center;">
+                    <el-button type="primary" @click="clickMe" >开始评估</el-button>
+                </el-form-item>
+            </el-form>
+        </el-col>
+    </el-row>
+    <div class="footer">Powered by Intel SGX and Avalon.</div>
+        <el-row style="display: none;" id="result">
+            <el-col :offset="2" :span="20">
+                <div class="result" id="msg"></div>
+            </el-col>
+        </el-row>
     </div>
-    <div class="form-group">
-        <label for="inputEmail3" class="col-sm-1 control-label">运动相对于静息而引发的ST抑制</label>
-        <div class="col-sm-1">
-            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-        </div>
-        <label for="inputEmail3" class="col-sm-1 control-label">Email</label>
-        <div class="col-sm-1">
-            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-        </div>
-        <label for="gender" class="col-sm-1 control-label">性别</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="0">Female</option>
-                <option value ="1">Male</option>
-            </select>
-        </div>
-        <label for="tst" class="col-sm-1 control-label">Thal</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="3">Normal</option>
-                <option value ="6">Fixed defect</option>
-                <option value ="7">Reversible defect</option>
-            </select>
-        </div>
-        <label for="dohd" class="col-sm-1 control-label">Diag</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="0"><50% diameter narrowing</option>
-                <option value ="1">>50% diameter narrowin</option>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="cpt" class="col-sm-1 control-label">胸痛类型</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="1">Typical angina</option>
-                <option value ="2">ATypical angina</option>
-                <option value="3">Non-anginal pain-</option>
-                <option value="4">Asymptomatic</option>
-            </select>
-        </div>
-        <label for="err" class="col-sm-1 control-label">静息心电图结果</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="0">Normal</option>
-                <option value ="1">Having ST-T wave abnormality</option>
-                <option value="2">showing hypertrophy</option>
-            </select>
-        </div>
-        <label for="eia" class="col-sm-1 control-label">Exercise incluced</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="1">Yes</option>
-                <option value ="0">No</option>
-            </select>
-        </div>
-        <label for="sotpess" class="col-sm-1 control-label">sploe</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="0">Upsloping</option>
-                <option value ="1">Flat</option>
-                <option value ="2">Downsloping</option>
-            </select>
-        </div>
-        <label for="nomvcbf" class="col-sm-1 control-label">number</label>
-        <div class="col-sm-1">
-            <select class="form-control">
-                <option value ="0">0</option>
-                <option value ="1">1</option>
-                <option value ="2">2</option>
-                <option value ="3">3</option>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-10">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Input variables as string
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-10">
-            <button type="submit" class="btn btn-default">Evaluate</button>
-        </div>
-    </div>
-</form>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            ruleForm: {
+                age: '',
+                gender: '',
+                text3: '',
+                rbp: '',
+                mhr: '',
+                sc: '',
+                fbs: '',
+                st:'',
+                tst:'',
+                hdd:'',
+                cpt:'',
+                err:'',
+                eia:'',
+                slope:'',
+                mvcf:'',
+                evaluate:'begin to evalute',
+                stdout:'',
+                stderr:'',
+            },
+            visible: false,
+            msg: 'abc',
+        },
+        methods: {
+            clickMe: function () {
+                var obj = this;
+                const url = '/processor/evluate/';
+                const params = {
+                    ...this.ruleForm,
+                }
+                console.log(params);
+                // 调用接口数据的样例
+                axios.post(url,params).then(function(response){
+                    var data = response.data; // 返回的data为form表单的json数据
+                    console.log(data);
+                    document.getElementById('result').style.display="block";
+                    document.getElementById('msg').innerHTML = data.stdout;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    })
+</script>
+
 </body>
 </html>

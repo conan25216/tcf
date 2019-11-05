@@ -12,7 +12,7 @@ func RunWeb() {
 	m := macaron.Classic()
 	m.Get("/hello/*", routers.GetParameter)
 	m.Get("/hello/index/", routers.GetIndex)
-	m.Post("/processor/go/", routers.GetTcfParas)
+	m.Post("/processor/evluate/", routers.GetTcfParas)
 
 	m.Use(macaron.Renderer(
 		macaron.RenderOptions{
