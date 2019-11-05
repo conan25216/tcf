@@ -5,8 +5,9 @@ import (
 	"tcf/processor"
 	"encoding/json"
 	"reflect"
-	"fmt"
 	"errors"
+	"fmt"
+	"strings"
 )
 
 
@@ -47,9 +48,11 @@ func GetTcfParas(ctx *macaron.Context) {
 	values,_ := ctx.Req.Body().Bytes()
 	json.Unmarshal(values,params)
 	paramString, err := params.ParasMerge()
+	paramString = strings.TrimSpace(paramString)
 	if err != nil  {
 		return //if miss value we dont run process, just return empty string
 	}
+	fmt.Println("paramString is ", paramString)
 	stdout,stderr := processor.RunProcessor(paramString)
 	result :=  Result{Stdout:stdout,Stderr:stderr}
 	resultJson,_:=json.Marshal(result)
@@ -64,11 +67,11 @@ func (p *Params)ParasMerge()(params string,err error){
 		switch f.Kind() {
 		//	//fmt.Println("f.kind is", f)
 		case reflect.String:
-			fmt.Println(f.String())
 			if f.String() == "" {
 				return "",errors.New("miss value error!")
 			}
 			params+=f.String()
+			params+=" "
 		}
 	}
 	return params,nil
